@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Header } from './components/Header';
-import { ActivityFeed } from './components/ActivityFeed';
-import { WelcomeBanner } from './components/WelcomeBanner';
+
 import { MetricCards } from './components/MetricCards';
 import { ApprovalRequests } from './components/ApprovalRequests';
 import { PartnerFunnel } from './components/PartnerFunnel';

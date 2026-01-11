@@ -1,24 +1,10 @@
-import { Zap } from 'lucide-react';
-import { Card, CardContent } from './ui/Card';
-import { Skeleton } from './ui/Skeleton';
-
-// Dummy data that matches your screenshot proportions
-const dummyData = {
-  percentageChange: 350,
-  amount: '$2.5m',
-  chartData: [
-    0.35,    // Jan 23   ~ small
-    0.45,    // Feb 23   medium
-    0.9,     // Mar 23   tall
-    1.75,    // Sep 23   highest (last bar - 350% growth vibe)
-  ],
-};
+import { TrendingUp } from "lucide-react";
+import { Card, CardContent } from "./ui/Card";
+import { Skeleton } from "./ui/Skeleton";
+import { usePayoutsData } from "../hooks/useQueries";
 
 export const PayoutsChart = () => {
-  // Use real data when available, fallback to dummy
-  const data = dummyData; // ← In production: replace with real data from usePayoutsData()
-  const isLoading = false;
-  const isError = false;
+  const { data, isLoading, isError } = usePayoutsData();
 
   if (isError) {
     return (
@@ -40,87 +26,91 @@ export const PayoutsChart = () => {
     );
   }
 
-  const chartData = data.chartData;
-  const maxValue = Math.max(...chartData, 1);
-  const lastIndex = chartData.length - 1;
+  const chartData = data?.chartData || [];
+  const maxValue = Math.max(...chartData);
+  const labels = [
+    "01.23",
+    "02.23",
+    "03.23",
+    "04.23",
+    "05.23",
+    "06.23",
+    "07.23",
+    "08.23",
+    "09.23",
+    "10.23",
+  ];
 
-  const labels = ['01.23', '02.23', '03.23', '09.23'];
-  if(data){
+  const getBarColor = (index: number) => {
+    const isLast = index === chartData.length - 1;
+    if (isLast) return "bg-[#c8ff00] hover:bg-[#b8ef00]";
+    else if (index < 3) return "bg-neutral-200 hover:bg-neutral-300";
+    else return "bg-black hover:bg-neutral-700";
+  };
 
-    return (
-      <Card className="border-none shadow-none bg-white">
-        <CardContent className="p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-black" />
-              <h3 className="text-sm font-semibold text-neutral-900">
-                Payouts last quarter
-              </h3>
-            </div>
-            {/* Optional: small avatar like in second screenshot */}
-            {/* <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-300" /> */}
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-black" />
+            <h3 className="text-sm font-semibold text-neutral-900">
+              Payouts last quarter
+            </h3>
           </div>
-  
-          {/* Big stats */}
-          <div className="mb-10">
-            <div className="text-6xl md:text-7xl font-extrabold text-neutral-900 leading-none tracking-tight">
-              +{data.percentageChange}%
-            </div>
-            <div className="mt-2 text-2xl md:text-3xl font-semibold text-neutral-600">
-              {data.amount}
-            </div>
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-400 to-pink-400"></div>
+        </div>
+
+        <div className="mb-6">
+          <div className="text-5xl font-bold text-neutral-900 mb-1 leading-none">
+            +{data?.percentageChange}%
           </div>
-  
-          {/* Pill-shaped bar chart */}
-          <div className="relative h-64 flex items-end gap-3 px-2">
+          <div className="text-xl font-semibold text-neutral-600">
+            {data?.amount}
+          </div>
+        </div>
+
+        <div className="relative h-52">
+          <div className="absolute inset-0 flex items-end justify-between gap-1 pb-6">
             {chartData.map((value, index) => {
-              const height = Math.max((value / maxValue) * 100, 10);
-              const isLast = index === lastIndex;
-  
+              const heightPercentage = (value / maxValue) * 100;
               return (
                 <div
                   key={index}
                   className="flex-1 flex flex-col items-center justify-end group relative"
+                  style={{ height: "100%" }}
                 >
                   <div
-                    className={`
-                      w-full rounded-t-full transition-all duration-300 ease-out
-                      ${isLast
-                        ? 'bg-[#c8ff00]'
-                        : 'bg-black group-hover:bg-neutral-800'
-                      }
-                    `}
-                    style={{ height: `${height}%` }}
-                  />
-  
-                  {/* Tooltip on hover */}
-                  <div className="
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                    absolute -top-11 left-1/2 -translate-x-1/2
-                    bg-black/90 text-white text-xs px-3 py-1.5 rounded-md
-                    whitespace-nowrap z-20 pointer-events-none shadow-lg
-                  ">
-                    ${(value * 1).toFixed(1)}m
+                    className={`w-full max-w-[42px] rounded-full transition-all duration-300 ease-out cursor-pointer ${getBarColor(
+                      index
+                    )}`}
+                    style={{ height: `${Math.max(heightPercentage, 10)}%` }}
+                  >
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-medium px-3 py-1.5 rounded-md whitespace-nowrap z-20 pointer-events-none">
+                      ${value}m
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
-  
-          {/* X-axis labels */}
-          <div className="flex justify-between mt-5 px-2 text-xs md:text-[11px] text-neutral-400 font-medium">
-            {labels.map((label, i) => (
-              <span
+
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between px-1">
+            {labels.slice(0, chartData.length).map((label, index) => (
+              <div
                 key={label}
-                className={i === lastIndex ? 'font-bold text-neutral-900' : ''}
+                className={`text-[10px] font-medium flex-1 text-center ${
+                  index === chartData.length - 1
+                    ? "text-neutral-900 font-bold"
+                    : "text-neutral-400"
+                }`}
               >
                 {label}
-              </span>
+              </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
-    );
-  }
+        </div>
+      </CardContent>
+    </Card>
+  );
 };

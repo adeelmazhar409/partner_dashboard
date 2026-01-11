@@ -23,15 +23,15 @@ function Dashboard() {
       <Header />
       
       
-      <main className="max-w-[1920px] mx-5 px-6 py-8">
+      <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
 
         {/* Approval Requests */}
-        <div className="mb-8">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <ApprovalRequests />
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8 mx-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 mb-4 sm:mb-6 lg:mb-8">
           {/* Left Column - Payouts */}
           <div className="lg:col-span-4">
             <PayoutsChart />
@@ -42,21 +42,21 @@ function Dashboard() {
             <PartnerFunnel />
           </div>
         </div>
-        
+
         {/* Metrics Cards */}
-        <div className="mb-8">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <MetricCards />
         </div>
 
         {/* Bottom Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {/* Program Growth */}
-          <div className="lg:col-span-6">
+          <div>
             <ProgramGrowth />
           </div>
 
           {/* Inbox */}
-          <div className="lg:col-span-6">
+          <div>
             <Inbox />
           </div>
         </div>

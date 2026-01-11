@@ -29,24 +29,24 @@ export const Inbox = () => {
 
   return (
     <Card className="h-full flex flex-col">
-      <CardContent className="p-6 flex-1 flex flex-col">
+      <CardContent className="p-4 sm:p-6 flex-1 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="font-semibold text-neutral-900">Inbox</h3>
-          <Button variant="ghost" size="sm" className="text-sm">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-neutral-900">Inbox</h3>
+          <Button variant="ghost" size="sm" className="text-xs sm:text-sm whitespace-nowrap">
             View Full Inbox →
           </Button>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 space-y-4 overflow-y-auto mb-4">
+        <div className="flex-1 space-y-3 sm:space-y-4 overflow-y-auto mb-3 sm:mb-4">
           {messages?.map((message) => (
             <div
               key={message.id}
-              className="flex items-start gap-3 p-3 hover:bg-neutral-50 rounded-lg transition-colors cursor-pointer group"
+              className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 hover:bg-neutral-50 rounded-lg transition-colors cursor-pointer group"
             >
               <div className="relative flex-shrink-0">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-medium text-sm overflow-hidden">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-medium text-xs sm:text-sm overflow-hidden">
                   {message.avatar.startsWith('http') ? (
                     <img
                       src={message.avatar}
@@ -58,21 +58,21 @@ export const Inbox = () => {
                   )}
                 </div>
                 {message.badge && (
-                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                  <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 text-white text-[10px] sm:text-xs rounded-full flex items-center justify-center font-medium">
                     {message.badge}
                   </div>
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-medium text-sm text-neutral-900">
+                <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                  <span className="font-medium text-xs sm:text-sm text-neutral-900 truncate">
                     {message.sender}
                   </span>
-                  <span className="text-xs text-neutral-500 flex-shrink-0">
+                  <span className="text-[10px] sm:text-xs text-neutral-500 flex-shrink-0 ml-2">
                     {message.timeAgo}
                   </span>
                 </div>
-                <p className="text-sm text-neutral-600 line-clamp-2 group-hover:text-neutral-900">
+                <p className="text-xs sm:text-sm text-neutral-600 line-clamp-2 group-hover:text-neutral-900">
                   {message.message}
                 </p>
               </div>
@@ -81,22 +81,22 @@ export const Inbox = () => {
         </div>
 
         {/* Quick Reply */}
-        <div className="border-t pt-4">
+        <div className="border-t pt-3 sm:pt-4">
           <div className="relative">
             <input
               type="text"
               placeholder="Quick reply..."
-              className="w-full px-4 py-2.5 pr-10 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-lime focus:border-transparent"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 pr-10 bg-neutral-50 border border-neutral-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-lime focus:border-transparent"
             />
-            <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-neutral-200 rounded-lg transition-colors">
-              <Send className="w-4 h-4 text-neutral-600" />
+            <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 sm:p-2 hover:bg-neutral-200 rounded-lg transition-colors">
+              <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-neutral-600" />
             </button>
           </div>
         </div>
 
         {/* AI Chat Assistant */}
-        <div className="mt-4">
-          <Button className="w-full bg-black text-white hover:bg-neutral-800 h-12 rounded-lg font-medium">
+        <div className="mt-3 sm:mt-4">
+          <Button className="w-full bg-black text-white hover:bg-neutral-800 h-10 sm:h-12 rounded-lg font-medium text-xs sm:text-sm">
             <span className="mr-2">✨</span>
             AI Chat Assistant
           </Button>

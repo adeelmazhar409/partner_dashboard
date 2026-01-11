@@ -6,10 +6,74 @@
 @theme {
   --color-primary-lime: #c8ff00;
   --color-primary-green: #9de01e;
+
+  /* Custom breakpoint for extra small devices */
+  --breakpoint-xs: 480px;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Ensure smooth scrolling on mobile */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scroll on mobile */
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 640px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Hamburger menu styles */
+.hamburger-menu {
+  backdrop-filter: blur(8px);
+}
+
+/* Prevent body scroll when menu is open on mobile */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Optimize text rendering on all devices */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth transitions for responsive changes */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
 }
